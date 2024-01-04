@@ -17,7 +17,7 @@ type JobInformation struct {
 
 func main() {
 	//Replace "input.txt" with the path of the text file
-	filename := "C:\\Users\\arika\\OneDrive\\Desktop\\Job_title.txt"
+	filename := "input.txt"
 
 	file, err := os.Open(filename)
 	if err != nil {
@@ -30,8 +30,8 @@ func main() {
 
 	var jobInfo JobInformation
 
-	for scanner.Scan() {  //scanner.Scan()?  iterates through each line of the file
-		line := scanner.Text()  //scanner.Text()?  retrives current line from scanner
+	for scanner.Scan() { //scanner.Scan()?  iterates through each line of the file
+		line := scanner.Text() //scanner.Text()?  retrives current line from scanner
 
 		if title := ExtractJobTitle(line); title != "" {
 			jobInfo.Title = title
@@ -66,7 +66,7 @@ func main() {
 func ExtractJobTitle(line string) string {
 	//implement job title extraction logic using regular expressions
 	//Replace the pattern accordingly
-	pattern := regexp.MustCompile(`(?:Job Title|Title): (.+)`)
+	pattern := regexp.MustCompile(`(?i)(?:Job\s*Title|Title|Position|Role|Occupation)\s*:\s* (.+)`)
 	match := pattern.FindStringSubmatch(line)
 	if len(match) > 1 {
 		return match[1]
@@ -77,7 +77,7 @@ func ExtractJobTitle(line string) string {
 func ExtractDuties(line string) string {
 	//implement Duties extraction logic using regular expressions
 	//Replace the pattern accordingly
-	pattern := regexp.MustCompile(`(?:Duties|Responsibilities): (.+)`)
+	pattern := regexp.MustCompile(`(?i)(?:Duties|Responsibilities|Tasks|Job\s*Description)\s*:\s* (.+)`)
 	match := pattern.FindStringSubmatch(line)
 	if len(match) > 1 {
 		return match[1]
@@ -88,7 +88,7 @@ func ExtractDuties(line string) string {
 func ExtractLocation(line string) string {
 	//implement job title extraction logic using regular expressions
 	//Replace the pattern accordingly
-	pattern := regexp.MustCompile(`(?:Location|Location): (.+)`)
+	pattern := regexp.MustCompile(`(?i)(?:Location|Place)\s*:\s* (.+)`)
 	match := pattern.FindStringSubmatch(line)
 	if len(match) > 1 {
 		return match[1]
@@ -99,7 +99,7 @@ func ExtractLocation(line string) string {
 func ExtractPay(line string) string {
 	//implement job title extraction logic using regular expressions
 	//Replace the pattern accordingly
-	pattern := regexp.MustCompile(`(?:Pay|Salary): (.+)`)
+	pattern := regexp.MustCompile(`(?i)(?:Pay|Salary|Compensation)\s*:\s* (.+)`)
 	match := pattern.FindStringSubmatch(line)
 	if len(match) > 1 {
 		return match[1]
@@ -110,7 +110,7 @@ func ExtractPay(line string) string {
 func ExtractClient(line string) string {
 	//implement job title extraction logic using regular expressions
 	//Replace the pattern accordingly
-	pattern := regexp.MustCompile(`(?:Client|Customer): (.+)`)
+	pattern := regexp.MustCompile(`(?i)(?:Client|Customer|Company|Organization)\s*:\s* (.+)`)
 	match := pattern.FindStringSubmatch(line)
 	if len(match) > 1 {
 		return match[1]
